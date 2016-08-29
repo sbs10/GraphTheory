@@ -1,0 +1,52 @@
+//Hackerrank -> Domain -> Algorithms -> Graph theory -> even tree
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int cnt[102];
+vector<int>v[102];
+int par[102];
+int deleted[102];
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
+    int n,m;
+    cin>>n>>m;
+    for(int i=0;i<102;i++)
+        {
+        cnt[i]=1;
+        deleted[i]=0;
+        par[i]=0;
+    }
+    for(int i=1;i<=m;i++)
+       {
+        int from,to;
+        cin>>to>>from;
+        par[to] = from;
+        int cur = to;
+        while(par[cur]!=0)
+            { 
+                  cnt[par[cur]]++;
+                  cur=par[cur];
+            }
+        v[from].push_back(to);
+       }
+
+    int count=0;
+    for(int i=1; i<=n; i++)
+        { 
+          deleted[i]=1;
+          for(int j=0;j<v[i].size();j++)
+             {
+              if(!deleted[v[i][j]] && cnt[v[i][j]]%2==0){
+                  deleted[v[i][j]] = 1;
+                  count++;
+              }
+          }
+        }
+    cout<<count<<endl;
+    return 0;
+}
